@@ -1,20 +1,49 @@
 /* =====================================================
-   Portfolio minimalista — tema claro
-   Para cambiar los colores, edita solo las variables de :root
+   Portfolio — tema claro y oscuro, estilo minimalista
+   =====================================================
+   Personalización rápida:
+   - Colores del tema claro  → variables de :root
+   - Colores del tema oscuro → variables de [data-theme="dark"]
+   - El botón día/noche de la cabecera ya está conectado
+     (mira el <script> del <head> en index.html y js/main.js)
    ===================================================== */
 
+/* ---------- Tema claro (día) ---------- */
+
 :root {
+  color-scheme: light;
+
   --color-bg: #ffffff;            /* fondo general */
-  --color-surface: #f6f7f9;       /* fondo alterno (tarjetas, secciones) */
+  --color-surface: #f6f7f9;       /* fondo alterno (tarjetas, chips) */
   --color-text: #1f2328;          /* texto principal */
-  --color-text-muted: #59636e;   /* texto secundario */
-  --color-accent: #2563eb;        /* color de acento (enlaces, botones) */
+  --color-text-muted: #59636e;    /* texto secundario */
+  --color-accent: #2563eb;        /* color de acento */
   --color-accent-hover: #1d4ed8;  /* acento al pasar el ratón */
+  --color-accent-soft: rgba(37, 99, 235, 0.10); /* acento diluido (fondos) */
   --color-border: #e5e7eb;        /* bordes suaves */
+  --color-nav-bg: rgba(255, 255, 255, 0.85);    /* cabecera translúcida */
+  --shadow-card: 0 8px 20px rgba(15, 23, 42, 0.08);
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --radius: 10px;
-  --max-width: 900px;
+  --radius: 12px;
+  --max-width: 960px;
+}
+
+/* ---------- Tema oscuro (noche) ---------- */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #0e1420;
+  --color-surface: #161d2b;
+  --color-text: #e6edf3;
+  --color-text-muted: #9fb0c0;
+  --color-accent: #7aa2ff;
+  --color-accent-hover: #a3bdff;
+  --color-accent-soft: rgba(122, 162, 255, 0.12);
+  --color-border: #232c3d;
+  --color-nav-bg: rgba(14, 20, 32, 0.85);
+  --shadow-card: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 /* ===== Reset básico ===== */
@@ -31,7 +60,7 @@ html {
 
 /* Deja hueco al saltar a una sección, por la cabecera fija */
 section[id] {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 5rem;
 }
 
 body {
@@ -39,6 +68,16 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.7;
+}
+
+/* Suaviza el cambio de tema día/noche en los elementos clave */
+body,
+.header,
+.icon-btn,
+.skills__list li,
+.card__tags li {
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 a {
@@ -55,7 +94,7 @@ a:hover {
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
 }
 
 :focus-visible {
@@ -68,7 +107,9 @@ a:hover {
 .header {
   position: sticky;
   top: 0;
-  background: var(--color-bg);
+  background: var(--color-nav-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
   z-index: 10;
 }
@@ -77,6 +118,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   position: relative; /* para anclar el menú móvil */
   min-height: 4rem;
 }
@@ -84,17 +126,56 @@ a:hover {
 .nav__logo {
   font-weight: 700;
   color: var(--color-text);
+  font-size: 1.05rem;
 }
 
-/* Botón hamburguesa (solo móvil) */
-.nav__toggle {
-  position: relative;
+/* Botones cuadrados de la cabecera (tema y hamburguesa) */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 42px;
   background: none;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  color: var(--color-text);
   cursor: pointer;
+}
+
+.icon-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* En tema claro se muestra la luna (pasar a noche);
+   en tema oscuro, el sol (volver a día) */
+.icon--sun {
+  display: none;
+}
+
+[data-theme="dark"] .icon--sun {
+  display: block;
+}
+
+[data-theme="dark"] .icon--moon {
+  display: none;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Botón hamburguesa: tres barritas que se convierten en X */
+.nav__toggle {
+  position: relative;
 }
 
 .nav__toggle span,
@@ -104,7 +185,7 @@ a:hover {
   left: 11px;
   width: 18px;
   height: 2px;
-  background: var(--color-text);
+  background: currentColor;
   border-radius: 2px;
   transition: transform 0.2s ease, background 0.2s ease;
 }
@@ -123,7 +204,6 @@ a:hover {
   top: 6px;
 }
 
-/* El botón se convierte en una X cuando el menú está abierto */
 .nav__toggle.open span {
   background: transparent;
 }
@@ -144,11 +224,12 @@ a:hover {
   gap: 0.25rem;
   position: absolute;
   top: 100%;
-  left: -1.25rem;         /* alineado con el padding del .container */
-  right: -1.25rem;
+  left: -1.5rem;         /* alineado con el padding del .container */
+  right: -1.5rem;
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
-  padding: 0.75rem 1.25rem 1rem;
+  box-shadow: var(--shadow-card);
+  padding: 0.75rem 1.5rem 1rem;
 }
 
 .nav__menu.open {
@@ -169,8 +250,29 @@ a:hover {
 /* ===== Hero ===== */
 
 .hero {
-  padding: 4.5rem 1.25rem 4rem;
+  padding: 5rem 1.5rem 4.5rem;
   text-align: center;
+  background: radial-gradient(
+    70% 55% at 50% 0%,
+    var(--color-accent-soft),
+    transparent 70%
+  );
+}
+
+.hero__avatar {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .hero__greeting {
@@ -207,12 +309,12 @@ a:hover {
   gap: 0.75rem;
 }
 
-/* Botones */
+/* Botones (píldora) */
 
 .btn {
   display: inline-block;
-  padding: 0.6rem 1.4rem;
-  border-radius: var(--radius);
+  padding: 0.65rem 1.6rem;
+  border-radius: 999px;
   font-weight: 600;
   border: 2px solid transparent;
 }
@@ -244,13 +346,26 @@ a:hover {
 /* ===== Secciones ===== */
 
 .section {
-  padding: 3.5rem 1.25rem;
+  padding: 4rem 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
 .section__title {
   font-size: 1.6rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Barrita de acento delante del título */
+.section__title::before {
+  content: "";
+  width: 26px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .section p {
@@ -270,14 +385,22 @@ a:hover {
 .projects__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--color-accent);
 }
 
 .card__title {
@@ -326,9 +449,16 @@ a:hover {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  padding: 0.35rem 1rem;
+  padding: 0.4rem 1.1rem;
   font-weight: 600;
   font-size: 0.95rem;
+  transition: color 0.2s ease, border-color 0.2s ease,
+    background-color 0.25s ease;
+}
+
+.skills__list li:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 /* ===== Contacto ===== */
@@ -344,7 +474,7 @@ a:hover {
 
 .footer {
   border-top: 1px solid var(--color-border);
-  padding: 2rem 1.25rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   color: var(--color-text-muted);
   font-size: 0.9rem;
@@ -354,7 +484,7 @@ a:hover {
 
 @media (min-width: 768px) {
 
-  /* El botón hamburguesa desaparece y el menú se muestra en horizontal */
+  /* El botón hamburguesa desaparece y el menú pasa a horizontal */
   .nav__toggle {
     display: none;
   }
@@ -363,10 +493,12 @@ a:hover {
     display: flex;
     flex-direction: row;
     position: static;
+    margin-left: auto; /* empuja el menú hacia la derecha */
     gap: 1.75rem;
     padding: 0;
     border: none;
     background: none;
+    box-shadow: none;
   }
 
   /* Las tarjetas de proyecto pasan a 2 columnas */
@@ -382,7 +514,10 @@ a:hover {
     scroll-behavior: auto;
   }
 
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
+    animation: none !important;
   }
 }

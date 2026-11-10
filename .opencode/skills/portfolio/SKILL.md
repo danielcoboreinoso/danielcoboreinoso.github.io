@@ -43,6 +43,7 @@ carpetas:
 Busca y sustituye en `index.html` todos los textos entre corchetes:
 
 - `[Tu Nombre]` — en `<title>`, logo del nav, hero y footer.
+- `[DC]` — iniciales del círculo/avatar del hero.
 - `[tu especialidad, p. ej. frontend]` — subtítulo del hero.
 - `[tu-email@ejemplo.com]` — en el `mailto:` y en el texto visible.
 - `[tu-usuario]` — URL de GitHub.
@@ -58,8 +59,12 @@ y los enlaces Demo/Código. Duplica o borra tarjetas según cuántos haya.
 
 ### 5. Personalizar
 
-- Color de acento: solo cambia `--color-accent` y `--color-accent-hover`
-  en `:root` de `css/styles.css`.
+- Color de acento: cambia `--color-accent` y `--color-accent-hover` en
+  `:root` (tema claro) y en `[data-theme="dark"]` (tema oscuro) de
+  `css/styles.css`.
+- Tema día/noche: el botón de la cabecera ya funciona solo; usa la
+  preferencia del sistema la primera vez y recuerda la elección en
+  `localStorage`.
 - Habilidades: edita los `<li>` de la lista `#habilidades`.
 
 ### 6. Publicar en GitHub Pages
@@ -85,6 +90,7 @@ y los enlaces Demo/Código. Duplica o borra tarjetas según cuántos haya.
 - [ ] Enlaces externos con `target="_blank" rel="noopener"`.
 - [ ] Prueba responsive en DevTools (móvil ~375px y escritorio).
 - [ ] Menú móvil abre, cierra y al pulsar un enlace se cierra.
+- [ ] Botón día/noche cambia el tema y lo recuerda al recargar.
 - [ ] El año del footer se actualiza solo (JavaScript cargado).
 
 ## Errores comunes

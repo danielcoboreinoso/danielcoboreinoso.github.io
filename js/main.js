@@ -1,6 +1,6 @@
 // =====================================================
 // Portfolio — JavaScript mínimo
-// 1) Menú móvil  2) Año del footer
+// 1) Menú móvil  2) Botón día/noche  3) Año del footer
 // =====================================================
 
 // ----- 1) Menú móvil (hamburguesa) -----
@@ -28,7 +28,30 @@ menu.querySelectorAll("a").forEach((link) => {
   });
 });
 
-// ----- 2) Año del footer (se actualiza cada año solo) -----
+// ----- 2) Botón día/noche -----
+
+// El tema activo se guarda en el atributo data-theme de <html>.
+// La primera visita la decide el pequeño <script> del <head>
+// (según la preferencia del sistema); este botón la cambia y
+// recuerda la elección en localStorage.
+
+const themeToggle = document.getElementById("theme-toggle");
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  themeToggle.setAttribute(
+    "aria-label",
+    theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+  );
+}
+
+themeToggle.addEventListener("click", () => {
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  applyTheme(isDark ? "light" : "dark");
+});
+
+// ----- 3) Año del footer (se actualiza cada año solo) -----
 
 const year = document.getElementById("year");
 year.textContent = new Date().getFullYear();
