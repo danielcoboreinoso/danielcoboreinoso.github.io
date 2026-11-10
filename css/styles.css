@@ -259,6 +259,7 @@ a:hover {
   );
 }
 
+/* Círculo del hero: funciona igual como foto (<img>) o iniciales (<div>) */
 .hero__avatar {
   width: 92px;
   height: 92px;
@@ -273,6 +274,8 @@ a:hover {
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.05em;
+  overflow: hidden;    /* la foto no se sale del círculo */
+  object-fit: cover;   /* recorta la foto para llenar el círculo */
 }
 
 .hero__greeting {

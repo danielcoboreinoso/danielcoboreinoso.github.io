@@ -38,17 +38,22 @@ carpetas:
 | `templates/css/styles.css`       | `css/styles.css`   |
 | `templates/js/main.js`           | `js/main.js`       |
 
+Si el usuario tiene una foto de perfil, cópiala también al repo (por ejemplo
+en `assets/fot.jpg`) para el avatar del hero.
+
 ### 3. Rellenar los placeholders
 
 Busca y sustituye en `index.html` todos los textos entre corchetes:
 
-- `[Tu Nombre]` — en `<title>`, logo del nav, hero y footer.
-- `[DC]` — iniciales del círculo/avatar del hero.
+- `[Tu Nombre]` — en `<title>`, logo del nav, hero, footer y `alt` de la foto.
 - `[tu especialidad, p. ej. frontend]` — subtítulo del hero.
 - `[tu-email@ejemplo.com]` — en el `mailto:` y en el texto visible.
 - `[tu-usuario]` — URL de GitHub.
 - `[tu-usuario-linkedin]` — URL de LinkedIn (borra el `<li>` si no usa LinkedIn).
 - `[Nombre del proyecto]`, descripciones y `href` de Demo/Código de cada tarjeta.
+- Foto del hero: si el usuario tiene foto (p. ej. `assets/fot.jpg`), ajusta el
+  `src` del `<img class="hero__avatar">`. Si no tiene, sustituye el `<img>`
+  por el `<div>` de iniciales que aparece comentado debajo en el HTML.
 
 ### 4. Proyectos
 
@@ -92,6 +97,7 @@ y los enlaces Demo/Código. Duplica o borra tarjetas según cuántos haya.
 - [ ] Menú móvil abre, cierra y al pulsar un enlace se cierra.
 - [ ] Botón día/noche cambia el tema y lo recuerda al recargar.
 - [ ] El año del footer se actualiza solo (JavaScript cargado).
+- [ ] GitHub Pages activado (Settings → Pages, rama `main`).
 
 ## Errores comunes
 
